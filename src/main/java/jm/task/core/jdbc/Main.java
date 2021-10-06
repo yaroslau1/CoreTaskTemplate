@@ -7,9 +7,9 @@ public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
         UserService userService = new UserServiceImpl();
-        userService.dropUsersTable();
-        userService.createUsersTable();
+//        userService.dropUsersTable();
+//        userService.createUsersTable();
         userService.saveUser("Nik", "Mike", (byte) 23);
-        System.out.println(userService.getAllUsers());
+//        System.out.println(userService.getAllUsers());
     }
 }
