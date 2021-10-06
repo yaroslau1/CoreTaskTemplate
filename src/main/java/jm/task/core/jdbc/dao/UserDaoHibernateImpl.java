@@ -23,7 +23,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-//        Transaction transaction = session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
 
         session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER not NULL AUTO_INCREMENT," +
@@ -31,44 +31,52 @@ public class UserDaoHibernateImpl implements UserDao {
                 "lastName VARCHAR (255)," +
                 "age SMALLINT ," +
                 "PRIMARY KEY (id))").executeUpdate();
-        session.flush() ;
+        transaction.commit();
+        //session.close() ;
     }
 
     @Override
     public void dropUsersTable() {
-        session.createSQLQuery("DROP TABLE IF EXISTS users ").executeUpdate();
-        session.flush() ;
+        Transaction transaction = session.beginTransaction();
+        session.createSQLQuery("DROP TABLE IF EXISTS users ").addEntity(User.class).executeUpdate();
+        transaction.commit();
+        //session.close();
+
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         User user = new User(name, lastName, age);
         session.save(user);
-        session.getTransaction().commit();
-//        session.flush() ;
+        transaction.commit();
+       // session.close();
     }
 
     @Override
     public void removeUserById(long id) {
 //        User user = (User) session.load(User.class, id);
 //        session.delete(user);
+        Transaction transaction = session.beginTransaction();
         User user = (User)session.get(User.class,id);
         session.delete(user);
-        session.flush() ;
+        transaction.commit();
+        // session.close();
     }
 
     @Override
     public List<User> getAllUsers() {
         Criteria criteria;
         criteria = session.createCriteria(User.class);
-        session.flush() ;
+        //session.close() ;
         return criteria.list();
     }
 
     @Override
     public void cleanUsersTable() {
+        Transaction transaction = session.beginTransaction();
         session.createSQLQuery("Truncate table users").executeUpdate();
-        session.flush() ;
+       transaction.commit();
+      // session.close();
     }
 }
