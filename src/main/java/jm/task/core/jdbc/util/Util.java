@@ -15,7 +15,7 @@ public class Util {
 
     public static SessionFactory getSessionFactory(){
 
-        if(sessionFactory == null){
+        if(sessionFactory == null || sessionFactory.isClosed()){
             try {
                 Configuration configuration = new Configuration();
 

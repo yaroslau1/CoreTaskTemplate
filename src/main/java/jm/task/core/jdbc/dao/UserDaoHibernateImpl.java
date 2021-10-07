@@ -32,7 +32,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 "age SMALLINT ," +
                 "PRIMARY KEY (id))").executeUpdate();
         transaction.commit();
-        //session.close() ;
+//        session.close() ;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = session.beginTransaction();
         session.createSQLQuery("DROP TABLE IF EXISTS users ").addEntity(User.class).executeUpdate();
         transaction.commit();
-        //session.close();
+//        session.close();
 
     }
 
@@ -50,7 +50,7 @@ public class UserDaoHibernateImpl implements UserDao {
         User user = new User(name, lastName, age);
         session.save(user);
         transaction.commit();
-       // session.close();
+//        session.close();
     }
 
     @Override
@@ -61,14 +61,14 @@ public class UserDaoHibernateImpl implements UserDao {
         User user = (User)session.get(User.class,id);
         session.delete(user);
         transaction.commit();
-        // session.close();
+//         session.close();
     }
 
     @Override
     public List<User> getAllUsers() {
         Criteria criteria;
         criteria = session.createCriteria(User.class);
-        //session.close() ;
+//        session.close() ;
         return criteria.list();
     }
 
@@ -77,6 +77,6 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = session.beginTransaction();
         session.createSQLQuery("Truncate table users").executeUpdate();
        transaction.commit();
-      // session.close();
+//       session.close();
     }
 }
